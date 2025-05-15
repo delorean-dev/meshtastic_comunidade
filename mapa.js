@@ -1,26 +1,65 @@
+// Define os limites geográficos para Portugal
 const bounds = [
-  [36.8, -9.5],  // sudoeste
-  [42.2, -6.0]   // nordeste
+  [36.8, -9.5],  // sudoeste (lat, lon)
+  [42.2, -6.0]   // nordeste (lat, lon)
 ];
 
+// Inicializa o mapa centrado em Portugal, com minZoom e maxBounds para limitar a área e zoom
 const map = L.map('map', {
   minZoom: 7,
   maxBounds: bounds
 }).setView([39.5, -8.0], 7);
 
+// Previne arrastar o mapa para fora dos limites
 map.on('drag', () => {
   map.panInsideBounds(bounds, { animate: false });
 });
 
+// Camada satélite Esri
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others'
 }).addTo(map);
 
+// Camada com labels do OpenStreetMap por cima, com opacidade para sobrepor texto ao satélite
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: '© OpenStreetMap contributors',
   opacity: 0.6
 }).addTo(map);
 
-// fetch dados, etc (mantém o que já tens)
+// URL do teu Apps Script Web App para obter dados JSON
+const DATA_URL = 'https://script.google.com/macros/s/AKfycbzeUSZHCybjNSzWNnsJTgcJNhisnWv2E3VjOgPrygnxFkSpM5siqlOlhsqArq45dWZfOQ/exec';
+
+// Buscar dados e adicionar marcadores
+fetch(DATA_URL)
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(entry => {
+      const lat = parseFloat(entry["Latitude"]);
+      const lon = parseFloat(entry["Longitude"]);
+      const nick = entry["Nick no Telegram"];
+      const radio = entry["Qual o equipamento que tem?"];
+      const instalado = entry["Já instalou o equipamento?"];
+      const local = entry["Dentro de Casa / Telhado / Serra"];
+      const futuro = entry["Se não instalou, onde pretende colocar?"];
+      const obs = entry["Observações"];
+
+      if (!isNaN(lat) && !isNaN(lon)) {
+        const popupContent = `
+          <strong>${nick}</strong><br>
+          Equipamento: ${radio}<br>
+          Instalado: ${instalado}<br>
+          Local: ${local || futuro}<br>
+          Observações: ${obs || "Nenhuma"}
+        `;
+
+        L.marker([lat, lon])
+          .addTo(map)
+          .bindPopup(popupContent);
+      }
+    });
+  })
+  .catch(err => {
+    console.error("Erro ao carregar os dados:", err);
+  });
