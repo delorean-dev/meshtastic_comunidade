@@ -1,8 +1,10 @@
 const map = L.map('map').setView([39.5, -8.0], 7); // centro em Portugal
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
+  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others'
 }).addTo(map);
+
 
 // Link do teu Apps Script Web App
 const DATA_URL = 'https://script.google.com/macros/s/AKfycbzeUSZHCybjNSzWNnsJTgcJNhisnWv2E3VjOgPrygnxFkSpM5siqlOlhsqArq45dWZfOQ/exec';
