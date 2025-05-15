@@ -1,0 +1,21 @@
+
+[
+  {
+    "nome": "Fulano",
+    "nick_telegram": "@fulano123",
+    "radio": "T-Beam v1.1",
+    "lat": -23.55052,
+    "lng": -46.633308,
+    "antena": "1/4 onda",
+    "obs": "Região com muitos prédios"
+  },
+  {
+    "nome": "Ciclano",
+    "nick_telegram": "@ciclano",
+    "radio": "Lora32 v2",
+    "lat": -22.9068,
+    "lng": -43.1729,
+    "antena": "Dipolo caseiro",
+    "obs": "Visada parcial"
+  }
+]
