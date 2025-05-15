@@ -4,7 +4,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
 }).addTo(map);
 
-fetch('https://script.google.com/macros/s/AKfycbwmUmaq-_IUGfazIP91jAXedtFCyouWC3Y1FlBmaUhBn3rHczDmZCFIhdWdR51inU4q/exec')
+fetch('https://script.google.com/macros/s/AKfycbzeUSZHCybjNSzWNnsJTgcJNhisnWv2E3VjOgPrygnxFkSpM5siqlOlhsqArq45dWZfOQ/exec')
   .then(res => res.json())
   .then(data => {
     data.forEach(item => {
