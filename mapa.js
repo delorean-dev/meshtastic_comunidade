@@ -23,7 +23,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   opacity: 0.6
 }).addTo(map);
 
-const DATA_URL = 'https://script.google.com/macros/s/AKfycbzeUSZHCybjNSzWNnsJTgcJNhisnWv2E3VjOgPrygnxFkSpM5siqlOlhsqArq45dWZfOQ/exec';
+const DATA_URL = 'https://script.google.com/macros/s/AKfycbwui9msLGM2HDkN3P4yPlPnIYbfGSj_GnugpYxjn0AKa73wCR_MJ6Az4FPqkIhA0jGy/exec';
 
 fetch(DATA_URL)
   .then(res => res.json())
