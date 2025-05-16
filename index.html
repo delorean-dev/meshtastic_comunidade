@@ -2,40 +2,15 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>Mapa Meshtastic </title>
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%; overflow: hidden;
-    }
-    #map-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
-    iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-      pointer-events: none; /* bloqueia interação no iframe */
-      z-index: 1;
-    }
-    #map-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 10;
-      pointer-events: auto; /* permite interação aqui */
-    }
-  </style>
-
+  <title>Mapa Meshtastic</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Mapa ocupa a tela toda */
+    #map { height: 100vh; }
+  </style>
 </head>
 <body>
-  <div id="map-container">
-    <iframe src="https://map.meshstastic.pt" title="Mapa Meshtastic"></iframe>
-    <div id="map-overlay"></div>
-  </div>
+  <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="mapa.js"></script>
