@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>Mapa Meshtastic</title>
+  <title>Mapa Meshtastic </title>
   <style>
     html, body {
       margin: 0; padding: 0; height: 100%; overflow: hidden;
@@ -17,17 +17,15 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
-      pointer-events: none; /* deixa o iframe passar interação */
+      pointer-events: none; /* bloqueia interação no iframe */
       z-index: 1;
-      background: transparent;
     }
     #map-overlay {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: 10;
-      pointer-events: auto; /* permite interação nos pins */
-      background: transparent;
+      pointer-events: auto; /* permite interação aqui */
     }
   </style>
 
