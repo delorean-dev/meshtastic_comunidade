@@ -17,15 +17,17 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
-      pointer-events: none; /* bloqueia interação no iframe */
+      pointer-events: none; /* deixa interagir só no overlay */
       z-index: 1;
+      background: transparent;
     }
     #map-overlay {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: 10;
-      pointer-events: auto; /* permite interação aqui */
+      pointer-events: auto; /* permite interação */
+      background: transparent; /* transparente para deixar o iframe visível */
     }
   </style>
 
