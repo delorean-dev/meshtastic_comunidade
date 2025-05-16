@@ -9,21 +9,26 @@ const map = L.map('map-overlay', {
   maxBounds: bounds,
   zoomControl: false,
   attributionControl: false,
-  dragging: false,            // trava movimento do mapa no overlay
+  dragging: false,
   scrollWheelZoom: false,
   doubleClickZoom: false,
   boxZoom: false,
   keyboard: false,
   tap: false,
-  touchZoom: false
+  touchZoom: false,
+  // Evita camada branca do fundo do Leaflet
+  preferCanvas: true,
+  fadeAnimation: false,
+  zoomAnimation: false
 }).setView([39.5, -8.0], 7);
 
-// Fundo transparente (sem tiles), para não cobrir o iframe do mapa real
+// NENHUMA camada tile no overlay, para o iframe mostrar o mapa
+// Se quiseres usar uma camada transparente, podes usar essa:
 L.tileLayer('', {
   maxZoom: 18
 }).addTo(map);
 
-// URL do teu Apps Script Web App com dados do Google Forms
+// URL do teu Apps Script Web App (dados Google Forms)
 const DATA_URL = 'https://script.google.com/macros/s/AKfycbwui9msLGM2HDkN3P4yPlPnIYbfGSj_GnugpYxjn0AKa73wCR_MJ6Az4FPqkIhA0jGy/exec';
 
 fetch(DATA_URL)
