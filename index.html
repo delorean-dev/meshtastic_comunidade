@@ -17,7 +17,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
-      pointer-events: none; /* deixa interagir só no overlay */
+      pointer-events: none; /* deixa o iframe passar interação */
       z-index: 1;
       background: transparent;
     }
@@ -26,8 +26,8 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: 10;
-      pointer-events: auto; /* permite interação */
-      background: transparent; /* transparente para deixar o iframe visível */
+      pointer-events: auto; /* permite interação nos pins */
+      background: transparent;
     }
   </style>
 
@@ -35,7 +35,7 @@
 </head>
 <body>
   <div id="map-container">
-    <iframe src="http://map.meshstastic.pt" title="Mapa Meshtastic"></iframe>
+    <iframe src="https://map.meshstastic.pt" title="Mapa Meshtastic"></iframe>
     <div id="map-overlay"></div>
   </div>
 
