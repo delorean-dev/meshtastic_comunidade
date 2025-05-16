@@ -1,42 +1,58 @@
+// Definimos os limites para Portugal continental + ilhas (Açores e Madeira)
 const portugalBounds = L.latLngBounds([
-  [36.8, -9.5],  // sudoeste continente
+  [32.5, -31.5], // sudoeste Açores
   [42.2, -6.0]   // nordeste continente
 ]);
 
-// Polígono que inclui continente + ilhas (simplificado)
-const portugalPolygon = L.polygon([
-  // Contorno Portugal continental (exemplo simplificado)
-  [36.8, -9.5],
-  [36.8, -6.0],
-  [42.2, -6.0],
-  [42.2, -9.5],
+// Inicializa o mapa sem zoom fixo, vai ajustar ao bounds
+const map = L.map('map').setView([39.5, -8.0], 7);
 
-  // Madeira (exemplo aproximado)
-  [32.5, -17.5],
-  [32.5, -16.0],
-  [33.5, -16.0],
-  [33.5, -17.5],
-
-  // Açores (exemplo aproximado)
-  [37.0, -31.5],
-  [37.0, -25.5],
-  [40.0, -25.5],
-  [40.0, -31.5],
-
-  [36.8, -9.5] // volta ao ponto inicial para fechar
-]);
-
-const map = L.map('map', {
-  zoomControl: true,
+// Adiciona camada satélite Esri
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
-  minZoom: 6,
-}).setView([39.5, -8.0], 7);
+  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others'
+}).addTo(map);
 
-// Limita a navegação dentro do polígono com plugin leaflet-path-drag ou lógica customizada
-// Mas sem plugin, podes usar fitBounds para mostrar todo Portugal + ilhas:
-map.fitBounds(portugalPolygon.getBounds());
+// Adiciona camada só com labels OSM (opacidade para sobrepor no satélite)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: '© OpenStreetMap contributors',
+  opacity: 0.6
+}).addTo(map);
 
-// Adiciona a camada de satélite etc...
+// Ajusta o mapa para mostrar todo o território português + ilhas
+map.fitBounds(portugalBounds);
 
-// Se quiseres, podes adicionar o polígono para visualizar (debug)
-// portugalPolygon.addTo(map);
+// URL do teu Apps Script Web App para obter dados JSON
+const DATA_URL = 'https://script.google.com/macros/s/AKfycbwui9msLGM2HDkN3P4yPlPnIYbfGSj_GnugpYxjn0AKa73wCR_MJ6Az4FPqkIhA0jGy/exec';
+
+// busca os dados e adiciona marcadores
+fetch(DATA_URL)
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(entry => {
+      const lat = parseFloat(entry["Latitude"]);
+      const lon = parseFloat(entry["Longitude"]);
+      const nick = entry["Nome do seu equipamento ou do que quer dar."] || entry["Nick no Telegram"] || "Sem Nome";
+      const instalado = entry["Já instalou o equipamento?"] || "";
+      const local = entry["Dentro de Casa / Telhado / Serra"] || "";
+      const futuro = entry["Se não instalou, onde pretende colocar?"] || "";
+      const obs = entry["Observações"] || "";
+
+      if (!isNaN(lat) && !isNaN(lon)) {
+        const popupContent = `
+          <strong>${nick}</strong><br>
+          Instalado: ${instalado}<br>
+          Local: ${local || futuro}<br>
+          Observações: ${obs || "Nenhuma"}
+        `;
+
+        L.marker([lat, lon])
+          .addTo(map)
+          .bindPopup(popupContent);
+      }
+    });
+  })
+  .catch(err => {
+    console.error("Erro ao carregar os dados:", err);
+  });
