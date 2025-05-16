@@ -26,7 +26,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // URL do teu Apps Script Web App para obter dados JSON
-const DATA_URL = 'https://script.google.com/macros/s/AKfycbzeUSZHCybjNSzWNnsJTgcJNhisnWv2E3VjOgPrygnxFkSpM5siqlOlhsqArq45dWZfOQ/exec';
+const DATA_URL = 'https://script.google.com/macros/s/AKfycbwui9msLGM2HDkN3P4yPlPnIYbfGSj_GnugpYxjn0AKa73wCR_MJ6Az4FPqkIhA0jGy/exec';
 
 // busca os dados e adiciona marcadores
 fetch(DATA_URL)
